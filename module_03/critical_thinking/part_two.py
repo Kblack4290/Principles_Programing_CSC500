@@ -25,7 +25,7 @@ except ValueError:
 # Calculate the time when the alarm will go off using modulo operator to wrap around 24 hours
 alarm_time = (current_time + alarm_hours) % 24
 
-# Display the current time and the alarm time
+# Display the alarm time
 if alarm_time == 0:
     print(f"Alarm will go off at: {alarm_time}:00 at midnight.")
 elif alarm_time < 12:
