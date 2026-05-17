@@ -38,6 +38,9 @@ class PointsCalculator:
 try:        
     books = int(input('Enter the number of books purchase. '))
     points = int(input('How many points does the customer currently have? '))
+    if books < 0 or points < 0:
+        print('You cannot enter a negative number. Please enter a valid number.')
+        exit()
 except ValueError:
     print('You must enter a valid number')
     exit()
