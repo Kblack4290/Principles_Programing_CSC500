@@ -13,6 +13,7 @@ num_years = int(input("Enter the number of years: "))
 total_months = 0
 total_rainfall = 0.0
 
+# Use nested loops to collect rainfall data
 for year in range (1, num_years + 1):
     print(f"Year {year}:")
     for month in range(1, 13):
@@ -22,6 +23,8 @@ for year in range (1, num_years + 1):
         
 # Calculate the average rainfall
 average_rainfall = total_rainfall / total_months
-print(f'Total months: {total_months}')
-print(f'Total inches of rain: {total_rainfall:.2f}')
-print(f'Average amount of rainfall per month: {average_rainfall:.2f}')
+print()
+print("\nRainfall Data:")
+print(f'Total months: {total_months} months')
+print(f'Total inches of rain: {total_rainfall:.2f} inches')
+print(f'Average amount of rainfall per month: {average_rainfall:.2f} inches')
