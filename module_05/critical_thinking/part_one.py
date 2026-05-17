@@ -9,11 +9,13 @@ After all iterations, the program should display the number of months, the total
 '''
 
 # Get the number of years from the user
-try:
-    num_years = int(input("Enter the number of years: "))
-except ValueError:
-    print("You must enter a valid number.")
-    exit()
+while True:
+    try:
+        num_years = int(input("Enter the number of years: "))
+        if num_years > 0:
+            break
+    except ValueError:
+        print("You must enter a valid number.")
 
 total_months = 0
 total_rainfall = 0.0
@@ -22,19 +24,24 @@ total_rainfall = 0.0
 for year in range (1, num_years + 1):
     print(f"Year {year}:")
     for month in range(1, 13):
-        try:
-            rainfall = float(input(f"  Enter the inches of rainfall for month {month}: "))
-            if rainfall < 0:
+        while True:
+            try:
+                rainfall = float(input(f"  Enter the inches of rainfall for month {month}: "))
+                if rainfall >= 0:
+                    break    
                 print("Rainfall cannot be negative. Please enter a valid number.")
-                exit()
-        except ValueError:
-            print("You must enter a valid number.")
-            exit()
+            except ValueError:
+                print("You must enter a valid number.")
+
         total_rainfall += rainfall
         total_months += 1
         
 # Calculate the average rainfall
-average_rainfall = total_rainfall / total_months
+if total_months > 0:
+    average_rainfall = total_rainfall / total_months
+else:
+    print("Total months cannot be zero.")
+
 print()
 print("\nRainfall Data:")
 print(f'Total months: {total_months} months')
