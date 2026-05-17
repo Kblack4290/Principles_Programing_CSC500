@@ -1,4 +1,3 @@
-
 '''
 The CSU Global Bookstore has a book club that awards points to its students based on the number of books purchased each month. The points are awarded as follows:
 
@@ -23,24 +22,26 @@ class PointsCalculator:
             print(f'Wow! You purchased {self.books} books! You receive 60 points!')
             self.points += 60
         elif self.books < 8 and self.books >= 6:
-            print(f'You purchase {self.books} books! You receive 30 points.')
+            print(f'You purchased {self.books} books! You receive 30 points.')
             self.points += 30
         elif self.books < 6 and self.books >= 4:
-            print(f'You purchase {self.books} books! You receive 15 points.')
+            print(f'You purchased {self.books} books! You receive 15 points.')
             self.points += 15
         elif self.books < 4 and self.books >=2:
-            print(f'You purchase {self.books} books! You receive 5 points.')
+            print(f'You purchased {self.books} books! You receive 5 points.')
             self.points += 5
         else:
             print(f'0 points awarded! You must purchase 2 or more books to receive points.')
         
         return self.points
     
-        
-books = int(input('Enter the number of books purchase. '))
-points = int(input('How many points does the customer currently have? '))
-print("total books", books)
-print("current_points", points)
+try:        
+    books = int(input('Enter the number of books purchase. '))
+    points = int(input('How many points does the customer currently have? '))
+except ValueError:
+    print('You must enter a valid number')
+    exit()
+
 total_points = PointsCalculator(points,books)
 
 print(f'Your new points balance is {total_points.points_calc()}')
