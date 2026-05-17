@@ -8,14 +8,13 @@ The CSU Global Bookstore has a book club that awards points to its students base
     If a customer purchases 8 or more books, they earn 60 points.
     Write a program that asks the user to enter the number of books that they have purchased this month and then display the number of points awarded.
 '''
-
-
+# Create a class to calculate points based on the number of books purchased
 class PointsCalculator:
-    
+    # Initialize the class with points and books attributes
     def __init__(self, points=0, books=0):
         self.points = points
         self.books = books
-        
+    # Define a method to calculate points based on the number of books purchased    
     def points_calc(self):
         
         if self.books >= 8:
@@ -34,19 +33,22 @@ class PointsCalculator:
             print(f'0 points awarded! You must purchase 2 or more books to receive points.')
         
         return self.points
-    
+
+# Get the number of books purchased and current points from the user    
 try:        
     books = int(input('Enter the number of books purchase. '))
     points = int(input('How many points does the customer currently have? '))
+    # Validate that the user input is not negative
     if books < 0 or points < 0:
         print('You cannot enter a negative number. Please enter a valid number.')
         exit()
 except ValueError:
     print('You must enter a valid number')
     exit()
-
+    
+# Create an instance of the PointsCalculator class and calculate the total points
 total_points = PointsCalculator(points,books)
-
+# Display the new points balance to the user
 print(f'Your new points balance is {total_points.points_calc()}')
 
 
