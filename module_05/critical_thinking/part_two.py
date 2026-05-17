@@ -34,17 +34,18 @@ class PointsCalculator:
         
         return self.points
 
-# Get the number of books purchased and current points from the user    
-try:        
-    books = int(input('Enter the number of books purchase. '))
-    points = int(input('How many points does the customer currently have? '))
-    # Validate that the user input is not negative
-    if books < 0 or points < 0:
-        print('You cannot enter a negative number. Please enter a valid number.')
-        exit()
-except ValueError:
-    print('You must enter a valid number')
-    exit()
+# Get the number of books purchased and current points from the user
+while True:    
+    try:        
+        books = int(input('Enter the number of books purchase. '))
+        points = int(input('How many points does the customer currently have? '))
+        # Validate that the user input is not negative
+        if books >= 0 and points >= 0:
+            break
+        else:
+            print('You must enter a non-negative number.')
+    except ValueError:
+        print('You must enter a valid number')
     
 # Create an instance of the PointsCalculator class and calculate the total points
 total_points = PointsCalculator(points,books)
