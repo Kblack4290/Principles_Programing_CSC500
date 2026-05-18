@@ -20,13 +20,13 @@ class PointsCalculator:
         if self.books >= 8:
             print(f'Wow! You purchased {self.books} books! You receive 60 points!')
             self.points += 60
-        elif self.books < 8 and self.books >= 6:
+        elif self.books >= 6:
             print(f'You purchased {self.books} books! You receive 30 points.')
             self.points += 30
-        elif self.books < 6 and self.books >= 4:
+        elif self.books >= 4:
             print(f'You purchased {self.books} books! You receive 15 points.')
             self.points += 15
-        elif self.books < 4 and self.books >=2:
+        elif self.books >=2:
             print(f'You purchased {self.books} books! You receive 5 points.')
             self.points += 5
         else:
@@ -35,6 +35,7 @@ class PointsCalculator:
         return self.points
 
 # Get the number of books purchased and current points from the user
+#
 while True:    
     try:        
         books = int(input('Enter the number of books purchase. '))
