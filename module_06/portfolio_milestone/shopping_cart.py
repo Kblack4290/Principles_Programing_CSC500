@@ -11,16 +11,30 @@ class ItemToPurchase:
         item_quantity=0,
         item_description="none",
     ):
-        self.item_name = item_name
-        self.item_price = item_price
-        self.item_quantity = item_quantity
-        self.item_description = item_description
-
+        self.set_item_name(item_name)
+        self.set_item_price(item_price)
+        self.set_item_quantity(item_quantity)
+        self.set_item_description(item_description)
+        
     # Method to calculate and print the total cost of the item
     def print_item_cost(self):
         total = self.item_price * self.item_quantity
         print(f"\033[1;35m {self.item_name} {self.item_quantity} @ ${self.item_price:.2f} = ${total:.2f} \033[0m".center(50))
         return total
+    
+    # Adding setter methods for dynamic modification of item attributes
+    def set_item_name(self, item_name):
+        self.item_name = item_name
+
+    def set_item_price(self, item_price):
+        self.item_price = item_price
+    
+    def set_item_quantity(self, item_quantity):
+        self.item_quantity = item_quantity
+    
+    def set_item_description(self, item_description):
+        self.item_description = item_description
+        
 
 class ShoppingCart:
     
@@ -44,22 +58,27 @@ class ShoppingCart:
             if item.item_name == item_name:
                 self.cart_items.remove(item)
                 print(f"\033[32m {item_name} removed from the cart. \033[0m")
-            else:
-                print("\033[31m Item not found in cart. Nothing removed. \033[0m")
+                return
+        print("\033[31m Item not found in cart. Nothing removed. \033[0m")
 
     # Method to modify an item in the shopping cart
     def modify_item(self, item_to_purchase):
-        if item_to_purchase.item_name not in self.cart_items:
-            print("\033[31m Item not found in cart. Nothing modified. \033[0m")
-        else:
-            for item in self.cart_items:
-                if item_to_purchase.item_description != "none":
-                    item.item_description = item_to_purchase.item_description
-                if item_to_purchase.item_price != 0.00:
-                    item.item_price = item_to_purchase.item_price
+        item_found = False
+        for item in self.cart_items:
+            if item.item_name == item_to_purchase.item_name:
+                item_found = True
+                if item_to_purchase.item_price != 0:
+                    item.set_item_price(item_to_purchase.item_price)
                 if item_to_purchase.item_quantity != 0:
-                    item.item_quantity = item_to_purchase.item_quantity
-                break
+                    item.set_item_quantity(item_to_purchase.item_quantity)
+                if item_to_purchase.item_description != "none":
+                    item.set_item_description(item_to_purchase.item_description)
+                if item_to_purchase.item_name != "none":
+                    item.set_item_name(item_to_purchase.item_name)
+                print(f"\033[32m {item.item_name} modified in the cart. \033[0m")
+                return
+        if not item_found:
+            print("\033[31m Item not found in cart. Nothing modified. \033[0m")            
 
     # Method to calculate the total number of items in the shopping cart
     def get_num_items_in_cart(self):
@@ -79,14 +98,19 @@ class ShoppingCart:
     # Method to print the total cost of the items in the shopping cart
     def print_total(self):
         print(f"\033[1;35m OUTPUT SHOPPING CART\033[0m".center(50))
-        print(f"\033[1;35m {customer_name}'s Shopping Cart - {current_date} \033[0m".center(50))
-        print(f"\033[1;35m Number of Items: {shopping_cart.get_num_items_in_cart()} \033[0m".center(50))
-        print(f"\033[1;35m Total: ${shopping_cart.get_cost_of_cart():.2f} \033[0m".center(50))
+        print(f"\033[1;35m {self.customer_name}'s Shopping Cart - {self.current_date} \033[0m".center(50))
+        
+        if not self.cart_items:
+            print(f"\033[1;35m SHOPPING CART IS EMPTY \033[0m".center(50))
+            return
+        
+        print(f"\033[1;35m Number of Items: {self.get_num_items_in_cart()} \033[0m".center(50))
+        print(f"\033[1;35m Total: ${self.get_cost_of_cart():.2f} \033[0m".center(50))
 
     # Method to print the descriptions of the items in the shopping cart
     def print_description(self):
         print(f"\033[1;35m OUTPUT ITEMS' DESCRIPTIONS\033[0m".center(50))
-        print(f"\033[1;35m {customer_name}'s Shopping Cart - {current_date} \033[0m".center(50))
+        print(f"\033[1;35m {self.customer_name}'s Shopping Cart - {self.current_date} \033[0m".center(50))
         print(f"\033[1;35m Item Descriptions \033[0m".center(50))
 
         for item in self.cart_items:
@@ -143,14 +167,10 @@ def print_menu(shopping_cart):
                     price = float(input("Enter the item price: "))
                     quantity = int(input("Enter the item quantity: "))
                 except ValueError:
-                    print(
-                        "\033[31m Invalid input. Price and quantity must be a number. \033[0m"
-                    )
+                    print("\033[31m Invalid input. Price and quantity must be a number. \033[0m")
                     continue
                 if price < 0 or quantity < 0:
-                    print(
-                        "\033[31m Price or quantity cannot be negative. Please try again. \033[0m"
-                    )
+                    print("\033[31m Price or quantity cannot be negative. Please try again. \033[0m")
                     continue
                 description = input("Add a description of the item: ")
 
@@ -170,8 +190,36 @@ def print_menu(shopping_cart):
         item_name = input("Enter the name of the item you want to remove: ")
         shopping_cart.remove_item(item_name)
     elif(menu_selection == 'c'):
+        print(f"\033[1;35m MODIFY ITEM \033[0m".center(50))
         item_name = input("Enter the name of the item you want to modify: ")
-        shopping_cart.modify_item(item_name)
+
+        # Get original values of the item to be modified
+        original_item = None
+        for item in shopping_cart.cart_items:
+            if item.item_name == item_name:
+                original_item = item
+                break
+        
+        if original_item is None:
+            print("\033[31m Item not found in cart. Nothing modified. \033[0m")
+        else:
+            price_input = input(f"Enter new price or press Enter to keep current the price at \033[1m${original_item.item_price:.2f}\033[0m: ")
+            quantity_input = input(f"Enter new quantity or press Enter to keep the current quantity of \033[1m{original_item.item_quantity}\033[0m: ")
+            description_input = input(f"Enter new description or press Enter to keep the current description \033[1m{original_item.item_description}\033[0m: ")
+
+            try:
+                item_price = float(price_input) if price_input.strip() else original_item.item_price
+                item_quantity = int(quantity_input) if quantity_input.strip() else original_item.item_quantity
+            except ValueError:
+                print("\033[31m Invalid input. Price and quantity must be numbers. \033[0m")
+                print_menu(shopping_cart)
+                return
+
+            item_description = description_input.strip() if description_input.strip() else original_item.item_description
+
+            modify_item = ItemToPurchase(item_name, item_price, item_quantity, item_description)
+            shopping_cart.modify_item(modify_item)
+        
     elif(menu_selection == 'i'):
         # Call the print_description method to display the descriptions of the items in the shopping cart.
         shopping_cart.print_description()
