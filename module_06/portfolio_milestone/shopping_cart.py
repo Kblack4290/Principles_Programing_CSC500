@@ -48,8 +48,6 @@ class ShoppingCart:
     def add_items(self, item_to_purchase):
         self.cart_items.append(item_to_purchase)
         print(f"\033[32m {item_to_purchase.item_name} added to the cart. \033[0m")
-        for item in self.cart_items:
-            print(item.item_name)
 
     # Method to remove an item from the shopping cart
     def remove_item(self, item_name):
@@ -131,7 +129,7 @@ def print_menu(shopping_cart):
     menu = {
         "a": "Add item to cart",
         "r": "Remove item from cart",
-        "c": "Change item quantity",
+        "c": "Change item details",
         "i": "Output items' descriptions",
         "o": "Output shopping cart",
         "q": "Quit",
@@ -187,10 +185,11 @@ def print_menu(shopping_cart):
                 print("\033[31m Invalid input. Please enter 'yes' or 'no'. \033[0m")
 
     elif(menu_selection == 'r'):
+        print(f"\033[1;35m REMOVE ITEM FROM CART\033[0m".center(50))
         item_name = input("Enter the name of the item you want to remove: ")
         shopping_cart.remove_item(item_name)
     elif(menu_selection == 'c'):
-        print(f"\033[1;35m MODIFY ITEM \033[0m".center(50))
+        print(f"\033[1;35m MODIFY ITEM IN CART\033[0m".center(50))
         item_name = input("Enter the name of the item you want to modify: ")
 
         # Get original values of the item to be modified
