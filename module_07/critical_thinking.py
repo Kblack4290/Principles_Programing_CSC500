@@ -12,22 +12,22 @@ def main():
         'CSC102':{
             'Room Number' : 3004,
             'Instructor Name': 'Haynes',
-            'Meeting Time': '8:00 a.m.'
+            'Meeting Time': '9:00 a.m.'
         },
         'CSC103':{
             'Room Number' : 3004,
             'Instructor Name': 'Haynes',
-            'Meeting Time': '8:00 a.m.'
+            'Meeting Time': '10:00 a.m.'
         },
         'NET110':{
             'Room Number' : 3004,
             'Instructor Name': 'Haynes',
-            'Meeting Time': '8:00 a.m.'
+            'Meeting Time': '11:00 a.m.'
         },
         'COM241':{
             'Room Number' : 3004,
             'Instructor Name': 'Haynes',
-            'Meeting Time': '8:00 a.m.'
+            'Meeting Time': '1:00 a.m.'
         }
     }
     # This function looks up the course information based on the course number provided by the user.
