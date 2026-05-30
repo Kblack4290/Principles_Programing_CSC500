@@ -27,7 +27,7 @@ def main():
         'COM241':{
             'Room Number' : 3004,
             'Instructor Name': 'Haynes',
-            'Meeting Time': '1:00 a.m.'
+            'Meeting Time': '1:00 p.m.'
         }
     }
     # This function looks up the course information based on the course number provided by the user.
