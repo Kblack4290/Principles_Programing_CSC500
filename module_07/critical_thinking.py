@@ -1,6 +1,8 @@
 import sys
 
+# This program allows the user to look up course information based on a course number.
 def main():
+    # The course information is stored in a nested dictionary
     course_info = {
         'CSC101':{
             'Room Number' : 3004,
@@ -28,9 +30,11 @@ def main():
             'Meeting Time': '8:00 a.m.'
         }
     }
-
+    # This function looks up the course information based on the course number provided by the user.
     def course_info_lookup(course_number, course_info, recursion_counter):
 
+        # Check if the course number is in the course information dictionary
+        # If it is, print the course information. If it is not, increment the recursion counter and prompt the user to enter a valid course number.
         if course_number in course_info:
             
             print(f"\033[1;4;33m Course information for {course_number}\033[0m")
@@ -48,6 +52,7 @@ def main():
                 print("\033[1;31m\nMax tries reached. Program exiting.\033[0m")
                 sys.exit()
     
+    # Prompt the user to enter a course number and call the course_info_lookup function to retrieve and display the course information.
     course_number = input('Enter a course number: ').strip().upper()
     course_info_lookup(course_number, course_info, recursion_counter=0)
     
