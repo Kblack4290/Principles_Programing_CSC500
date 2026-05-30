@@ -31,7 +31,7 @@ def main():
         }
     }
     # This function looks up the course information based on the course number provided by the user.
-    def course_info_lookup(course_number, course_info, recursion_counter):
+    def course_info_lookup(course_number, course_info, attempt_counter):
 
         # Check if the course number is in the course information dictionary
         # If it is, print the course information. If it is not, increment the recursion counter and prompt the user to enter a valid course number.
@@ -41,20 +41,19 @@ def main():
             for info in course_info[course_number]:
                 print(f"\033[94m    {info}: {course_info[course_number].get(info)}\033[0m")
         else:
-            recursion_counter += 1
+            attempt_counter += 1
             print(f"\033[91m Course number {course_number} not found.\033[0m")
 
-            print(recursion_counter)
-            if recursion_counter < 3:
+            if attempt_counter < 3:
                 course_number = input('Enter a valid course number: ').strip().upper()
-                course_info_lookup(course_info=course_info, course_number=course_number, recursion_counter=recursion_counter)
+                course_info_lookup(course_info=course_info, course_number=course_number, attempt_counter=attempt_counter)
             else:
                 print("\033[1;31m\nMax tries reached. Program exiting.\033[0m")
                 sys.exit()
     
     # Prompt the user to enter a course number and call the course_info_lookup function to retrieve and display the course information.
     course_number = input('Enter a course number: ').strip().upper()
-    course_info_lookup(course_number, course_info, recursion_counter=0)
+    course_info_lookup(course_number, course_info, attempt_counter=0)
     
 if __name__ == "__main__":
     main()
