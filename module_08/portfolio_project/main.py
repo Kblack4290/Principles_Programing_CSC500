@@ -42,9 +42,9 @@ def print_menu(shopping_cart):
         while add_item:
 
             if items_added == 0:
-                input_item = input("Do you want to add an item to the shopping cart? (yes/no) ").title()
+                input_item = input("Do you want to add an item to the shopping cart? (yes/no) ")
             else:
-                input_item = input("Do you want to add another item to the shopping cart? (yes/no) ").title()
+                input_item = input("Do you want to add another item to the shopping cart? (yes/no) ")
 
             # If the user inputs 'yes', prompt them to enter the item name, price, and quantity.
             # Ensure that the user inputs valid data for price and quantity.
@@ -112,9 +112,11 @@ def print_menu(shopping_cart):
     elif(menu_selection == 'i'):
         # Call the print_description method to display the descriptions of the items in the shopping cart.
         shopping_cart.print_description()
+        input("Press Enter to return to the menu...")
     elif(menu_selection == 'o'):
         # Call the print_total method to display the total cost of the items in the shopping cart.
         shopping_cart.print_total()
+        input("Press Enter to return to the menu...")
     else:
         print(f"\033[31m Invalid option. Please try again. \033[0m".center(50))
     

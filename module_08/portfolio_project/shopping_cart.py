@@ -57,6 +57,7 @@ class ShoppingCart:
 
     # Method to print the total cost of the items in the shopping cart
     def print_total(self):
+        print()
         print(f"\033[1;35m OUTPUT SHOPPING CART\033[0m".center(50))
         print(f"\033[1;35m {self.customer_name}'s Shopping Cart - {self.current_date} \033[0m".center(50))
         
@@ -69,6 +70,7 @@ class ShoppingCart:
 
     # Method to print the descriptions of the items in the shopping cart
     def print_description(self):
+        print()
         print(f"\033[1;35m OUTPUT ITEMS' DESCRIPTIONS\033[0m".center(50))
         print(f"\033[1;35m {self.customer_name}'s Shopping Cart - {self.current_date} \033[0m".center(50))
         print(f"\033[1;35m Item Descriptions \033[0m".center(50))
