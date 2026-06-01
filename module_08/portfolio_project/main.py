@@ -5,7 +5,7 @@ from shopping_cart import ShoppingCart
 
 # Main function to run the shopping cart program
 current_date = datetime.now().strftime("%B %d, %Y")
-customer_name = input("Enter your name: ").title()
+customer_name = input("Enter your name: ").strip().title()
 shopping_cart = ShoppingCart(customer_name, current_date)
 
 # The main function to run the shopping cart program, which welcomes the user and displays the menu options.
@@ -28,7 +28,7 @@ def print_menu(shopping_cart):
     for select in menu:
         print(f"\033[1;35m {select} - {menu[select]} \033[0m".center(50))
         
-    menu_selection = input(f" Choose an Option: ")
+    menu_selection = input(f" Choose an Option: ").strip().lower()
     
     # Use a series of if-elif statements to determine which menu option the user selected and call the appropriate method on the shopping cart object.
     if(menu_selection == 'q'):
@@ -50,7 +50,10 @@ def print_menu(shopping_cart):
             # Ensure that the user inputs valid data for price and quantity.
             if input_item.lower() == "yes":
                 print(f"Item {items_added + 1}")
-                name = input("Enter the item name: ").title()
+                name = input("Enter the item name: ").strip().title()
+                if not name:
+                    print("\033[31m Item name cannot be empty. Please try again. \033[0m")
+                    continue
                 try:
                     price = float(input("Enter the item price: "))
                     quantity = int(input("Enter the item quantity: "))
@@ -60,7 +63,7 @@ def print_menu(shopping_cart):
                 if price < 0 or quantity < 0:
                     print("\033[31m Price or quantity cannot be negative. Please try again. \033[0m")
                     continue
-                description = input("Add a description of the item: ").title()
+                description = input("Add a description of the item: ").strip().title()
 
                 # Create an instance of the ItemToPurchase class with the user's input and add it to the shopping cart.
                 item_to_purchase = ItemToPurchase(name, price, quantity, description)
@@ -76,11 +79,11 @@ def print_menu(shopping_cart):
 
     elif(menu_selection == 'r'):
         print(f"\033[1;35m REMOVE ITEM FROM CART\033[0m".center(50))
-        item_name = input("Enter the name of the item you want to remove: ").title()
+        item_name = input("Enter the name of the item you want to remove: ").strip().title()
         shopping_cart.remove_item(item_name)
     elif(menu_selection == 'c'):
         print(f"\033[1;35m MODIFY ITEM IN CART\033[0m".center(50))
-        item_name = input("Enter the name of the item you want to modify: ").title()
+        item_name = input("Enter the name of the item you want to modify: ").strip().title()
 
         # Get original values of the item to be modified
         original_item = None
@@ -94,13 +97,18 @@ def print_menu(shopping_cart):
         else:
             price_input = input(f"Enter new price or press Enter to keep current the price at \033[1m${original_item.item_price:.2f}\033[0m: ")
             quantity_input = input(f"Enter new quantity or press Enter to keep the current quantity of \033[1m{original_item.item_quantity}\033[0m: ")
-            description_input = input(f"Enter new description or press Enter to keep the current description \033[1m{original_item.item_description}\033[0m: ").title()
+            description_input = input(f"Enter new description or press Enter to keep the current description \033[1m{original_item.item_description}\033[0m: ").strip().title()
 
             try:
                 item_price = float(price_input) if price_input.strip() else original_item.item_price
                 item_quantity = int(quantity_input) if quantity_input.strip() else original_item.item_quantity
             except ValueError:
                 print("\033[31m Invalid input. Price and quantity must be numbers. \033[0m")
+                print_menu(shopping_cart)
+                return
+            
+            if item_price < 0 or item_quantity < 0:
+                print("\033[31m Price and quantity cannot be negative. Modification denied. \033[0m")
                 print_menu(shopping_cart)
                 return
 
